@@ -2,12 +2,15 @@
 
 const { Pool } = require('pg');
 
-// Connexion à la base (lit la même variable d'environnement)
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-
-// Récupérer les utilisateurs connectés (mémoire)
-// On ne peut pas accéder à 'users' depuis server.js directement
-// Donc on va créer une route API que server.js exposera
+// ========== CONNEXION À SUPABASE ==========
+const pool = new Pool({
+    host: process.env.PGHOST,
+    port: process.env.PGPORT,
+    database: process.env.PGDATABASE,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    ssl: { rejectUnauthorized: false }
+});
 
 console.log('🧹 Module de nettoyage chargé (en attente de démarrage)');
 
@@ -22,19 +25,18 @@ function startCleanup(intervalMinutes = 10, getOnlineUsersCallback) {
 
     cleanupInterval = setInterval(async () => {
         try {
-            // Récupérer la liste des pseudos en ligne via le callback
             const onlinePseudos = getOnlineUsersCallback ? getOnlineUsersCallback() : [];
 
             if (onlinePseudos.length > 0) {
+                const placeholders = onlinePseudos.map((_, i) => `$${i + 1}`).join(',');
                 const result = await pool.query(
-                    "DELETE FROM users WHERE pseudo NOT IN ($1) AND (is_member IS NULL OR is_member = false)",
-                    [onlinePseudos]
+                    `DELETE FROM users WHERE pseudo NOT IN (${placeholders}) AND (is_member IS NULL OR is_member = false)`,
+                    onlinePseudos
                 );
                 if (result.rowCount > 0) {
                     console.log(`🧹 Nettoyage: ${result.rowCount} visiteur(s) supprimé(s) de la base`);
                 }
             } else {
-                // Si personne n'est connecté, on supprime tous les visiteurs
                 const result = await pool.query("DELETE FROM users WHERE is_member IS NULL OR is_member = false");
                 if (result.rowCount > 0) {
                     console.log(`🧹 Nettoyage complet: ${result.rowCount} visiteur(s) supprimé(s) de la base`);
