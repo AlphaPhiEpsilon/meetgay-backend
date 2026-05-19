@@ -1,7 +1,3 @@
-console.log('🔍 DATABASE_URL brute:', process.env.DATABASE_URL);
-console.log('🔍 NODE_ENV:', process.env.NODE_ENV);
-console.log('🔍 PORT:', process.env.PORT);
-console.log('🔍 TOUTES LES CLES:', Object.keys(process.env));
 // ========== CHARGEMENT DES VARIABLES ==========
 // ========== CHARGEMENT DES VARIABLES D'ENVIRONNEMENT ==========
 // dotenv est utilisé uniquement en développement local
