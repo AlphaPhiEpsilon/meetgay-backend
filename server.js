@@ -34,12 +34,7 @@ const app = express();
 const server = http.createServer(app);
 const JWT_SECRET = 'meetgay_super_secret_key_2026';
 
-// Base de données
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
-    family: 4  // ← FORCE L'UTILISATION D'IPv4
-});
+
 
 // ========== MIDDLEWARE ==========
 app.use(express.json());
