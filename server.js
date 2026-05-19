@@ -12,7 +12,14 @@ const server = http.createServer(app);
 const JWT_SECRET = 'meetgay_super_secret_key_2026';
 
 // Base de données
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+const pool = new Pool({
+    host: process.env.PGHOST,
+    port: process.env.PGPORT,
+    database: process.env.PGDATABASE,
+    user: process.env.PGUSER,
+    password: process.env.PGPASSWORD,
+    ssl: { rejectUnauthorized: false }  // ← OBLIGATOIRE pour Supabase
+});
 
 // ========== MIDDLEWARE ==========
 app.use(express.json());
