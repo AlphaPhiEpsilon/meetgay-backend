@@ -20,7 +20,15 @@ const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
 const jwt = require('jsonwebtoken');
+// ========== BASE DE DONNÉES POSTGRESQL (LOCAL) ==========
 const { Pool } = require('pg');
+const pool = new Pool({
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5432,
+    database: process.env.DB_NAME || 'meetgay_db',
+    user: process.env.DB_USER || 'meetgay_user',
+    password: process.env.DB_PASSWORD || 'MeetGay2026!',
+});
 
 const app = express();
 const server = http.createServer(app);
