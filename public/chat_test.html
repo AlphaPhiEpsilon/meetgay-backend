@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Test API</title>
+</head>
+
+<body>
+    <h1>Test /api/get-user</h1>
+    <form id="testForm">
+        <input type="text" id="pseudo" placeholder="teri" required>
+        <button type="submit">Tester</button>
+    </form>
+    <pre id="result"></pre>
+
+    <script>
+        document.getElementById('testForm').onsubmit = async (e) => {
+            e.preventDefault();
+            const pseudo = document.getElementById('pseudo').value;
+            const res = await fetch('/api/get-user', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ pseudo })
+            });
+            const data = await res.json();
+            document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+        };
+    </script>
+</body>
+
+</html>

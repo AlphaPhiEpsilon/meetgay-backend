@@ -48,52 +48,52 @@ function showContactInfo(pseudo, age, gender, orientation, location, purpose, bi
     const contactOrientationSpan = document.getElementById('contactOrientation');
     const contactPurposeDiv = document.getElementById('contactPurpose');
     const contactBioSpan = document.getElementById('contactBio');
-    const t = window.chatT || {
-        noBio: "Pas de présentation",
-        iAmHereFor: "🎯 Je suis ici pour :"
-
-        
-    };
-
-    const existingBio = document.getElementById('contactBio')?.innerText;
-    if (existingBio && existingBio !== "Pas de présentation" && existingBio !== "Aucune présentation") {
-        bio = existingBio;
-    }
 
     if (!contactInfoDiv) return;
 
     contactInfoDiv.style.display = 'block';
-    if (contactNameSpan) contactNameSpan.innerText = pseudo;
+
+    // 1. Pseudo
+    if (contactNameSpan) contactNameSpan.innerText = pseudo || '?';
+
+    // 2. Âge
     if (contactAgeSpan) contactAgeSpan.innerText = age || '?';
 
-    
-    if (window.privateChatAvailable && window.privateChatAvailable[pseudo]) {
-        if (typeof showPrivateChatButton === 'function') {
-            showPrivateChatButton(pseudo);
-        }
-    }
-
-    // Traduction du genre
-    let genderText = '';
-    if (gender === 'H') genderText = (window.chatLang === 'fr' ? 'Gay' : 'Gay');
-    else if (gender === 'F') genderText = (window.chatLang === 'fr' ? 'Hétéro' : 'Hetero');
+    // 3. Genre
+    let genderText = '?';
+    if (gender === 'G') genderText = 'Gay';
+    else if (gender === 'H') genderText = (window.chatLang === 'fr' ? 'Hétéro' : 'Hetero');
     else if (gender === 'T') genderText = (window.chatLang === 'fr' ? 'Transgenre' : 'Transgender');
     if (contactGenderSpan) contactGenderSpan.innerText = genderText;
 
-    // Traduction de l'orientation
-    const orientationText = getOrientationText(orientation);
+    // 4. Orientation
+    const orientationText = getOrientationText(orientation) || '?';
     if (contactOrientationSpan) contactOrientationSpan.innerText = orientationText;
 
-    // Traduction du purpose
+    // 5. Localité (on l'ajoute à la suite de l'orientation)
+    const locationText = (location && location !== 'undefined') ? location : '';
+    if (locationText && contactOrientationSpan) {
+        // On ajoute la localité après l'orientation
+        contactOrientationSpan.innerText = `${orientationText} | ${locationText}`;
+    }
+
+    // 6. Objectif
     let purposeText = '';
     if (purpose === 'meeting') purposeText = (window.chatLang === 'fr' ? '💬 Rencontre' : '💬 Ontmoeting');
     else if (purpose === 'flirt') purposeText = (window.chatLang === 'fr' ? '😘 Flirt' : '😘 Flirt');
     else if (purpose === 'adultery') purposeText = (window.chatLang === 'fr' ? '💔 Relation sexuelle' : '💔 Seksuele relatie');
-    if (contactPurposeDiv) contactPurposeDiv.innerHTML = `${t.iAmHereFor} ${purposeText}`;
+    else purposeText = (window.chatLang === 'fr' ? 'Non précisé' : 'Niet gespecificeerd');
 
-    // Bio
-    if (contactBioSpan) contactBioSpan.innerText = bio || t.noBio;
+    if (contactPurposeDiv) {
+        contactPurposeDiv.innerHTML = `🎯 Je suis ici pour : ${purposeText}`;
+    }
+
+    // 7. Bio
+    if (contactBioSpan) {
+        contactBioSpan.innerText = bio || (window.chatLang === 'fr' ? 'Pas de présentation' : 'Geen introductie');
+    }
 }
+
 
 function hideContactInfo() {
     const contactInfoDiv = document.getElementById('contactInfo');
@@ -126,4 +126,3 @@ function stopBlinking() {
     const envelope = document.getElementById('envelope');
     if (envelope) envelope.classList.remove('blinking');
 }
-

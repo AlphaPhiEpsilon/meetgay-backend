@@ -173,6 +173,7 @@
         <div class="login-box">
             <h1>✉️ MeetGay</h1>
             <div class="subtitle" id="subtitle">Rejoignez le chat</div>
+            <div id="errorMsg" style="color: red; margin-top: 10px;"></div>
 
             <form id="loginForm">
                 <label id="labelPseudo">👤 Pseudo :</label>
@@ -210,17 +211,17 @@
                 <label id="labelLocation">📍 Localité :</label>
                 <select id="location" required>
                     <option value="" id="locationDefault">Sélectionnez votre région</option>
-                    <option value="BRU">🇧🇪 Bruxelles (BRU)</option>
-                    <option value="ANV">🇧🇪 Anvers (ANV)</option>
-                    <option value="LIE">🇧🇪 Liège (LIE)</option>
-                    <option value="GAND">🇧🇪 Gand (GAND)</option>
-                    <option value="CHAR">🇧🇪 Charleroi (CHAR)</option>
-                    <option value="NAM">🇧🇪 Namur (NAM)</option>
-                    <option value="MONS">🇧🇪 Mons (MONS)</option>
-                    <option value="LUV">🇧🇪 Louvain (LUV)</option>
-                    <option value="BRUGE">🇧🇪 Bruges (BRUGE)</option>
-                    <option value="ARLON">🇧🇪 Arlon (ARLON)</option>
-                    <option value="AUTRE">🇧🇪 Autre (AUTRE)</option>
+                    <option value="BRU">🇧🇪 Bruxelles</option>
+                    <option value="ANV">🇧🇪 Anvers</option>
+                    <option value="LIE">🇧🇪 Liège</option>
+                    <option value="GAND">🇧🇪 Gand</option>
+                    <option value="CHAR">🇧🇪 Charleroi</option>
+                    <option value="NAM">🇧🇪 Namur</option>
+                    <option value="MONS">🇧🇪 Mons</option>
+                    <option value="LUV">🇧🇪 Louvain</option>
+                    <option value="BRUGE">🇧🇪 Bruges</option>
+                    <option value="ARLON">🇧🇪 Arlon</option>
+                    <option value="AUTRE">🇧🇪 Autre</option>
                 </select>
 
                 <label id="labelBio">📝 Présentez-vous :</label>
@@ -270,9 +271,9 @@
                 note: "⚡ Chat privé instantané\nCliquez sur un pseudo pour lui parler",
                 gender: "⚧ Genre :",
                 genderDefault: "Sélectionnez",
-                genderG: " Gay",
-                genderH: " Hétéro",
-                genderT: " Transgenre",
+                genderG: "Gay",
+                genderH: "Hétéro",
+                genderT: "Transgenre",
                 purpose: "🎯 Je suis ici pour :",
                 purposeDefault: "Sélectionnez",
                 purposeMeeting: "💬 Rencontre",
@@ -294,9 +295,9 @@
                 note: "⚡ Privé chat\nKlik op een pseudoniem om te praten",
                 gender: "⚧ Geslacht :",
                 genderDefault: "Selecteer",
-                genderG: " Gay",
-                genderH: " Hetero",
-                genderT: " Transgender",
+                genderG: "Gay",
+                genderH: "Hetero",
+                genderT: "Transgender",
                 purpose: "🎯 Ik ben hier voor :",
                 purposeDefault: "Selecteer",
                 purposeMeeting: "💬 Ontmoeting",
@@ -304,8 +305,6 @@
                 purposeAdultery: "💔 Seksuele relatie"
             }
         };
-
-        
 
         // Appliquer la langue (sans switch)
         function applyLanguage(lang) {
@@ -315,117 +314,207 @@
             document.getElementById('subtitle').innerText = t.subtitle;
             document.getElementById('labelPseudo').innerHTML = t.pseudo;
             document.getElementById('labelAge').innerHTML = t.age;
-            document.getElementById('ageDefault').innerText = t.ageDefault;
+            const ageDefault = document.getElementById('ageDefault');
+            if (ageDefault) ageDefault.innerText = t.ageDefault;
             document.getElementById('labelTendencies').innerHTML = t.tendencies;
-            document.getElementById('tendenciesDefault').innerText = t.tendenciesDefault;
+            const tendenciesDefault = document.getElementById('tendenciesDefault');
+            if (tendenciesDefault) tendenciesDefault.innerText = t.tendenciesDefault;
             document.getElementById('labelLocation').innerHTML = t.location;
-            document.getElementById('locationDefault').innerText = t.locationDefault;
+            const locationDefault = document.getElementById('locationDefault');
+            if (locationDefault) locationDefault.innerText = t.locationDefault;
             document.getElementById('labelBio').innerHTML = t.bio;
-            document.getElementById('bio').placeholder = t.bioPlaceholder;
-            document.getElementById('submitBtn').innerHTML = t.submit;
-                // Genre
-            document.getElementById('labelGender').innerHTML = t.gender;
-            document.getElementById('genderDefault').innerText = t.genderDefault;
-            document.querySelector('#gender option[value="G"]').innerText = t.genderG;
-            document.querySelector('#gender option[value="H"]').innerText = t.genderH;
-            document.querySelector('#gender option[value="T"]').innerText = t.genderT;
+            const bioField = document.getElementById('bio');
+            if (bioField) bioField.placeholder = t.bioPlaceholder;
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) submitBtn.innerHTML = t.submit;
+            
+            // Genre
+            const labelGender = document.getElementById('labelGender');
+            if (labelGender) labelGender.innerHTML = t.gender;
+            const genderDefault = document.getElementById('genderDefault');
+            if (genderDefault) genderDefault.innerText = t.genderDefault;
+            const genderGOption = document.querySelector('#gender option[value="G"]');
+            if (genderGOption) genderGOption.innerText = t.genderG;
+            const genderHOption = document.querySelector('#gender option[value="H"]');
+            if (genderHOption) genderHOption.innerText = t.genderH;
+            const genderTOption = document.querySelector('#gender option[value="T"]');
+            if (genderTOption) genderTOption.innerText = t.genderT;
 
             // Purpose
-            document.getElementById('labelPurpose').innerHTML = t.purpose;
-            document.getElementById('purposeDefault').innerText = t.purposeDefault;
-            document.querySelector('#purpose option[value="meeting"]').innerText = t.purposeMeeting;
-            document.querySelector('#purpose option[value="flirt"]').innerText = t.purposeFlirt;
-            document.querySelector('#purpose option[value="adultery"]').innerText = t.purposeAdultery;
-            document.getElementById('note').innerHTML = t.note.replace(/\n/g, '<br>');
+            const labelPurpose = document.getElementById('labelPurpose');
+            if (labelPurpose) labelPurpose.innerHTML = t.purpose;
+            const purposeDefault = document.getElementById('purposeDefault');
+            if (purposeDefault) purposeDefault.innerText = t.purposeDefault;
+            const purposeMeeting = document.querySelector('#purpose option[value="meeting"]');
+            if (purposeMeeting) purposeMeeting.innerText = t.purposeMeeting;
+            const purposeFlirt = document.querySelector('#purpose option[value="flirt"]');
+            if (purposeFlirt) purposeFlirt.innerText = t.purposeFlirt;
+            const purposeAdultery = document.querySelector('#purpose option[value="adultery"]');
+            if (purposeAdultery) purposeAdultery.innerText = t.purposeAdultery;
+            
+            const note = document.getElementById('note');
+            if (note) note.innerHTML = t.note.replace(/\n/g, '<br>');
         }
 
-        // Traduction orientation (appelée après applyLanguage)
-            function translateOrientation() {
-                const currentLang = localStorage.getItem('MeetGay_lang') || 'fr';
-                if (currentLang === 'nl') {
-                    document.getElementById('optA').innerText = '▲ Actief (A)';
-                    document.getElementById('optP').innerText = '▼ Passief (P)';
-                    document.getElementById('optV').innerText = '▲▼ Veelzijdig (V)';
-                } else {
-                    document.getElementById('optA').innerText = '▲ Actif (A)';
-                    document.getElementById('optP').innerText = '▼ Passif (P)';
-                    document.getElementById('optV').innerText = '▲▼ Versatile (V)';
-                }
-            }
-
+        // Traduction orientation
+        function translateOrientation() {
+            const currentLang = localStorage.getItem('MeetGay_lang') || 'fr';
+            const optA = document.getElementById('optA');
+            const optP = document.getElementById('optP');
+            const optV = document.getElementById('optV');
             
-
-            // Appeler cette fonction après chaque changement de langue
-            translateOrientation();
+            if (currentLang === 'nl') {
+                if (optA) optA.innerText = '▲ Actief (A)';
+                if (optP) optP.innerText = '▼ Passief (P)';
+                if (optV) optV.innerText = '▲▼ Veelzijdig (V)';
+            } else {
+                if (optA) optA.innerText = '▲ Actif (A)';
+                if (optP) optP.innerText = '▼ Passif (P)';
+                if (optV) optV.innerText = '▲▼ Versatile (V)';
+            }
+        }
 
         // Remplir les âges (18 à 99)
-        // Remplir les âges (18 à 99) avec traduction
+        function populateAges() {
             const ageSelect = document.getElementById('age');
+            if (!ageSelect) return;
+            
             const lang = localStorage.getItem('MeetGay_lang') || 'fr';
             const ageSuffix = lang === 'fr' ? 'ans' : 'jaar';
-
+            
+            // Vider les options existantes (sauf la première)
+            while (ageSelect.options.length > 1) {
+                ageSelect.remove(1);
+            }
+            
             for (let i = 18; i <= 99; i++) {
                 const option = document.createElement('option');
                 option.value = i;
                 option.textContent = `${i} ${ageSuffix}`;
                 ageSelect.appendChild(option);
             }
-
-            
+        }
 
         // Compteur de caractères pour la bio
         const bioTextarea = document.getElementById('bio');
         const bioCounter = document.getElementById('bioCounter');
-        bioTextarea.addEventListener('input', () => {
-            bioCounter.textContent = bioTextarea.value.length;
-        });
+        if (bioTextarea && bioCounter) {
+            bioTextarea.addEventListener('input', () => {
+                bioCounter.textContent = bioTextarea.value.length;
+            });
+        }
 
         // Nettoyer les entrées
         function cleanInput(str) {
             return str.replace(/[<>]/g, '').trim();
         }
 
-        // Soumission du formulaire
-        document.getElementById('loginForm').addEventListener('submit', (e) => {
+        // ========== SOUMISSION DU FORMULAIRE AVEC JWT ==========
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            const pseudo = cleanInput(document.getElementById('pseudo').value);
-            const bio = cleanInput(document.getElementById('bio').value);
+            const clean = (str) => str.replace(/[<>]/g, '').trim();
+            const pseudo = clean(document.getElementById('pseudo').value);
+            const bio = clean(document.getElementById('bio').value);
 
-            if (pseudo.length < 2) {
-                alert(currentLang === 'fr' ? "Le pseudo doit faire au moins 2 caractères" : "De gebruikersnaam moet minimaal 2 tekens bevatten");
+            // CORRECTION 1: Vérifier que tous les champs sont remplis
+            const age = document.getElementById('age').value;
+            const tendencies = document.getElementById('tendencies').value;
+            const gender = document.getElementById('gender').value;
+            const purpose = document.getElementById('purpose').value;
+            const location = document.getElementById('location').value;
+
+            if (!age || !tendencies || !gender || !purpose || !location) {
+                alert(currentLang === 'fr' ? "Veuillez remplir tous les champs" : "Vul alle velden in");
                 return;
             }
 
-            if (pseudo.length > 15) {
-                alert(currentLang === 'fr' ? "Le pseudo ne peut pas dépasser 15 caractères" : "De gebruikersnaam mag niet meer dan 15 tekens bevatten");
+            if (pseudo.length < 2 || pseudo.length > 15) {
+                alert(currentLang === 'fr' ? "Le pseudo doit faire entre 2 et 15 caractères" : "De gebruikersnaam moet 2-15 tekens bevatten");
                 return;
             }
 
             const user = {
                 pseudo: pseudo,
-                age: document.getElementById('age').value,
-                tendencies: document.getElementById('tendencies').value,
-                locationCode: document.getElementById('location').value,
-                locationName: document.getElementById('location').selectedOptions[0]?.text || document.getElementById('location').value,
+                age: parseInt(age),
+                tendencies: tendencies,
+                locationCode: location,
+                locationName: document.getElementById('location').selectedOptions[0]?.text || location,
                 bio: bio.substring(0, 100) || (currentLang === 'fr' ? "Aucune présentation" : "Geen introductie"),
-                gender: document.getElementById('gender').value,        // ← AJOUT
-                purpose: document.getElementById('purpose').value,      // ← AJOUT
-                language: currentLang
+                gender: gender,
+                purpose: purpose
             };
 
-            localStorage.setItem('chatUser', JSON.stringify(user));
-            window.location.href = '/chat.html';
+            // CORRECTION 2: Désactiver le bouton pendant l'envoi
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = currentLang === 'fr' ? "Envoi en cours..." : "Bezig met verzenden...";
+
+            try {
+                // 1. Inscription
+                const registerRes = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(user)
+                });
+
+                const registerData = await registerRes.json();
+
+                if (!registerRes.ok) {
+                    if (registerData.error === 'Pseudo déjà utilisé') {
+                        alert(currentLang === 'fr' ? "Ce pseudo est déjà utilisé" : "Deze gebruikersnaam is al in gebruik");
+                    } else {
+                        throw new Error(registerData.error || 'Erreur inscription');
+                    }
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    return;
+                }
+
+                // 2. Login pour obtenir le token JWT
+                const loginRes = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ pseudo: pseudo })
+                });
+
+                const loginData = await loginRes.json();
+
+                if (loginData.success) {
+                    localStorage.setItem('meetgay_token', loginData.token);
+                    localStorage.setItem('meetgay_user', JSON.stringify(loginData.user));
+                    localStorage.setItem('meetgay_pseudo', pseudo);
+                    window.location.href = '/chat.html';
+                } else {
+                    alert(loginData.error || (currentLang === 'fr' ? "Erreur de connexion" : "Foutmelding"));
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }
+            } catch (err) {
+                console.error('Erreur:', err);
+                alert(currentLang === 'fr' ? "Erreur de connexion au serveur. Vérifiez que le serveur est démarré." : "Verbindingsfout met de server. Controleer of de server draait.");
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+            }
         });
 
-        // Appliquer la langue au chargement
+        // Appliquer la langue et initialiser
         applyLanguage(currentLang);
-    </script>
-    <script>
-        function chooseLanguage(lang) {
-            localStorage.setItem('nostalgia_lang', lang);
-            window.location.href = '/login.html';
-        }
+        translateOrientation();
+        populateAges();
+        
+        // CORRECTION 3: S'assurer que la langue est bien récupérée pour les âges après changement
+        window.addEventListener('storage', function(e) {
+            if (e.key === 'MeetGay_lang') {
+                currentLang = e.newValue || 'fr';
+                applyLanguage(currentLang);
+                translateOrientation();
+                populateAges();
+            }
+
+            
+        });
     </script>
 </body>
 

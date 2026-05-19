@@ -7,43 +7,9 @@
     <title>MeetGay - Chat</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="manifest" href="/manifest.json">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="MeetGay">
-    <link rel="apple-touch-icon" href="/icons/icon-192.png">
-    <link rel="icon" type="image/png" href="/favicon-16x16.png">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💬</text></svg>">
 </head>
 
 <body>
-    <script>
-        // AJOUT PROTECTION 18+ : Vérifier si l'utilisateur a validé son âge
-        (function checkAgeVerification() {
-            const isAgeVerified = sessionStorage.getItem('meetgay_age_verified');
-            if (!isAgeVerified) {
-                // Pas de validation 18+ -> redirection vers l'accueil
-                window.location.href = '/index.html';
-                return;
-            }
-            // Vérifier que la validation date de moins de 24h
-            const verifiedTime = sessionStorage.getItem('meetgay_age_verified_time');
-            if (verifiedTime && (Date.now() - parseInt(verifiedTime) > 86400000)) {
-                sessionStorage.removeItem('meetgay_age_verified');
-                window.location.href = '/index.html';
-                return;
-            }
-
-            // AJOUT CRUCIAL : Vérifier que l'utilisateur est bien inscrit
-            const chatUser = localStorage.getItem('chatUser');
-            if (!chatUser) {
-                // Pas d'inscription -> redirection vers login.html
-                window.location.href = '/login.html';
-                return;
-            }
-        })();
-    </script>
-    <!-- HEADER -->
     <header class="site-header">
         <div class="header-content">
             <div class="logo">
@@ -54,20 +20,18 @@
         </div>
     </header>
 
-    <!-- MAIN CONTENT -->
     <div class="main-container">
         <div class="container">
-            <!-- GAUCHE : connectés -->
             <div class="users-panel">
                 <h3 id="connectedTitle">👥 Connectés</h3>
                 <div id="usersList">En attente...</div>
             </div>
 
-            <!-- CENTRE : chat -->
             <div class="chat-panel">
                 <div id="contactInfo" class="contact-info">
                     <div><span class="contact-name" id="contactName"></span>
-                        (<span id="contactAge"></span> ans, <span id="contactGender"></span>, <span id="contactOrientation"></span>)
+                        (<span id="contactAge"></span> ans, <span id="contactGender"></span>, <span
+                            id="contactOrientation"></span>)
                     </div>
                     <div id="contactPurpose" style="margin-top: 5px; font-size: 12px; color: #555;"></div>
                     <div class="contact-bio" id="contactBio"></div>
@@ -85,7 +49,6 @@
                 <div id="envelope" class="envelope" style="display: none;">✉️</div>
             </div>
 
-            <!-- DROITE : historique -->
             <div class="history-panel">
                 <h4 id="historyTitle">📋 Historique</h4>
                 <div id="historyList">
@@ -95,105 +58,73 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="site-footer">
         <div class="footer-content">
             © 2026 MeetGay - Chat Belgique -
-            <a href="/mentions-legales.html">Mentions légales</a> -
-            <a href="/cgu.html">CGU</a> -
-            <a href="/contact.html">Contact</a>
+            <a href="#">Mentions légales</a> -
+            <a href="#">Contact</a>
         </div>
     </footer>
 
-    <!-- SOCKET & SCRIPTS -->
     <script src="/socket.io/socket.io.js"></script>
 
-    <!-- Traductions pour le chat -->
     <script>
-        // Lire la langue choisie dans index.html (stockée dans localStorage)
+        // ========== VÉRIFICATION JWT ==========
+        const token = localStorage.getItem('meetgay_token');
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+
+        // ========== LECTURE DE LA LANGUE ==========
         let chatLang = localStorage.getItem('MeetGay_lang') || 'fr';
 
-        // Traductions pour le chat (textes dynamiques)
+        // ========== TRADUCTIONS ==========
         const chatTranslations = {
-                fr: {
-                    emptyMessage: "💬 En attente de message...",
-                    noBio: "Pas de présentation",
-                    noBioAvailable: "Bio non disponible",
-                    noConversation: "Aucune conversation",
-                    placeholderInput: "Cliquez sur un pseudo d'abord...",   // ← ajout
-                    placeholderReply: "Répondre à",
-                    messageFor: "Message pour",
-                    sendBtn: "✉️ Envoyer",
-                    historyTitle: "📋 Historique",                         // ← ajout
-                    footerText: "© 2026 MeetGay - Chat Belgique -" ,      // ← ajout (si tu veux)
-                    connectedTitle: "👥 Connectés",
-                    iAmHereFor: "🎯 Je suis ici pour :"
-                },
-                nl: {
-                    emptyMessage: "💬 Wachten op bericht...",
-                    noBio: "Geen introductie",
-                    noBioAvailable: "Bio niet beschikbaar",
-                    noConversation: "Geen gesprek",
-                    placeholderInput: "Klik eerst op een pseudoniem...",
-                    placeholderReply: "Antwoorden aan",
-                    messageFor: "Bericht voor",
-                    sendBtn: "✉️ Verstuur",
-                    historyTitle: "📋 Historisch",                       // ← ajout
-                    footerText: "© 2026 MeetGay - Chat België -" ,        // ← ajout (België au lieu de Belgique)
-                    connectedTitle: "👥 Aangesloten",
-                    iAmHereFor: "🎯 Ik ben hier voor :"
-                }
-            };
+            fr: {
+                emptyMessage: "💬 En attente de message...",
+                placeholderInput: "Cliquez sur un pseudo d'abord...",
+                sendBtn: "✉️ Envoyer",
+                historyTitle: "📋 Historique",
+                connectedTitle: "👥 Connectés"
+            },
+            nl: {
+                emptyMessage: "💬 Wachten op bericht...",
+                placeholderInput: "Klik eerst op een pseudoniem...",
+                sendBtn: "✉️ Verstuur",
+                historyTitle: "📋 Historisch",
+                connectedTitle: "👥 Aangesloten"
+            }
+        };
 
-        // Rendre les traductions accessibles globalement
-        window.chatLang = chatLang;
-        window.chatT = chatTranslations[chatLang];
+        const t = chatTranslations[chatLang];
 
-        // Appliquer les textes statiques au chargement
+        // ← AJOUT : Exporter les globales pour ui.js et history.js
+            window.chatLang = chatLang;
+            window.chatT = chatTranslations[chatLang];
+
+        // ========== APPLICATION DES TEXTES ==========
         document.addEventListener('DOMContentLoaded', () => {
-                const t = window.chatT;
-                if (!t) {
-                    console.error("Traductions non chargées");
-                    return;
-                }
+                // ← AJOUT : Mettre à jour les globales au cas où
+                window.chatLang = chatLang;
+                window.chatT = chatTranslations[chatLang];
 
-                // Message area
                 const msgArea = document.getElementById('messageArea');
                 if (msgArea) msgArea.innerHTML = `<div class="empty-message">${t.emptyMessage}</div>`;
 
-                // History list (initiale)
                 const historyDiv = document.getElementById('historyList');
-                if (historyDiv && historyDiv.querySelector('.empty-message')) {
-                    historyDiv.innerHTML = `<div class="empty-message" style="padding: 20px;">${t.noConversation}</div>`;
-                }
+                if (historyDiv) historyDiv.innerHTML = `<div class="empty-message" style="padding: 20px;">Aucune conversation</div>`;
 
-                // Bouton envoyer
                 const sendBtn = document.getElementById('sendBtn');
                 if (sendBtn) sendBtn.innerHTML = t.sendBtn;
 
-                // Placeholder input
                 const messageInput = document.getElementById('messageInput');
                 if (messageInput) messageInput.placeholder = t.placeholderInput;
 
-                // Titre historique
                 const historyTitle = document.getElementById('historyTitle');
                 if (historyTitle) historyTitle.innerHTML = t.historyTitle;
 
-                // Footer
-                const footerDiv = document.getElementById('footerContent');
-                if (footerDiv) {
-                    const links = footerDiv.querySelectorAll('a');
-                    const linksHtml = Array.from(links).map(a => a.outerHTML).join(' - ');
-                    footerDiv.innerHTML = `${t.footerText} ${linksHtml}`;
-                }
-
-                // 👉 Titre Connectés (avec sécurité)
                 const connectedTitle = document.getElementById('connectedTitle');
-                if (connectedTitle) {
-                    connectedTitle.innerHTML = t.connectedTitle;
-                } else {
-                    console.warn("L'élément avec id='connectedTitle' n'a pas été trouvé. Vérifie ton HTML.");
-                }
+                if (connectedTitle) connectedTitle.innerHTML = t.connectedTitle;
             });
     </script>
 

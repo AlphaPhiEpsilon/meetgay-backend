@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - MeetGay</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #667eea;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #667eea;
+        }
+
+        .logout-btn {
+            float: right;
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #f0f0ff;
+        }
+
+        button {
+            padding: 6px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn-ban {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-warn {
+            background: #f39c12;
+            color: white;
+        }
+
+        .btn-modo {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-admin {
+            background: #9b59b6;
+            color: white;
+        }
+
+        .btn-unban {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status-banned {
+            color: red;
+            font-weight: bold;
+        }
+
+        .status-user {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <button class="logout-btn" onclick="logout()">Déconnexion</button>
+        <h1>👑 Panel Admin - MeetGay</h1>
+        <div id="adminInfo">Chargement...</div>
+        <div id="usersList">Chargement des utilisateurs...</div>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+
+</html>
