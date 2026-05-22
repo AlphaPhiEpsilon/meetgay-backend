@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MeetGay - Mentions légales</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        p,
+        li {
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 30px;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>📄 Mentions légales</h1>
+        <p><strong>Dernière mise à jour :</strong> 18 mai 2026</p>
+
+        <h2>1. Éditeur du site</h2>
+        <p>
+            <strong>Nom du site :</strong> MeetGay<br>
+            <strong>Statut :</strong> Projet personnel / Association<br>
+            <strong>Propriétaire et responsable :</strong> [VOTRE NOM]<br>
+            <strong>Adresse :</strong> [VOTRE ADRESSE - mettez même une adresse postale si possible]<br>
+            <strong>Email :</strong> [VOTRE EMAIL DE CONTACT]<br>
+            <strong>Téléphone :</strong> [FACULTATIF]
+        </p>
+
+        <h2>2. Hébergement du site</h2>
+        <p>
+            <strong>Hébergeur :</strong> Railway<br>
+            <strong>Adresse :</strong> 760 Market St, Suite 900, San Francisco, CA 94102, États-Unis<br>
+            <strong>Site web :</strong> <a href="https://railway.com" target="_blank">https://railway.com</a>
+        </p>
+
+        <h2>3. Protection des données personnelles (RGPD)</h2>
+        <p>
+            Conformément au RGPD et à la loi belge, vous disposez d'un droit d'accès, de rectification et de suppression
+            de vos données.
+        </p>
+        <p>
+            Les données collectées (pseudo, âge, orientation, localité, bio, messages) sont utilisées uniquement pour le
+            fonctionnement du chat.
+        </p>
+        <p>
+            <strong>Durée de conservation :</strong> Les logs de messages sont conservés 1 an à des fins de modération
+            et de preuve en cas d'enquête judiciaire.
+        </p>
+        <p>
+            <strong>Contact DPO :</strong> [VOTRE EMAIL]
+        </p>
+
+        <h2>4. Cookies et traceurs</h2>
+        <p>
+            Ce site utilise uniquement du <strong>sessionStorage</strong> pour gérer votre connexion. Aucun cookie tiers
+            n'est déposé.
+        </p>
+
+        <h2>5. Responsabilité</h2>
+        <p>
+            MeetGay est une plateforme de discussion communautaire. Nous ne sommes pas responsables des rencontres,
+            échanges ou actes qui auraient lieu hors du site.
+        </p>
+        <p>
+            Tout utilisateur est tenu de respecter les Conditions Générales d'Utilisation et la loi belge.
+        </p>
+
+        <a href="/index.html" class="back-link">← Retour à l'accueil</a>
+    </div>
+</body>
+
+</html>
