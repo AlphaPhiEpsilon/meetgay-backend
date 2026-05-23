@@ -14,22 +14,6 @@
 // 10. DÉMARRAGE DU SERVEUR
 // ============================================================
 
-// ============================================================
-// server.js - Cœur du chat MeetGay (restructuré)
-// ============================================================
-// STRUCTURE :
-// 1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT
-// 2. IMPORTS
-// 3. CONNEXION À POSTGRESQL
-// 4. MIDDLEWARES EXPRESS
-// 5. JWT & ADMIN MIDDLEWARE
-// 6. ROUTES PUBLIQUES (register, login, get-user, verify-token)
-// 7. ROUTES ADMIN (warn, ban, unban, set-modo, set-admin)
-// 8. SOCKET.IO (chat temps réel + messages privés)
-// 9. OPTIONS EXTERNALISÉES (nettoyage + backup)
-// 10. DÉMARRAGE DU SERVEUR
-// ============================================================
-
 // ========== 1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT ==========
 if (process.env.NODE_ENV !== 'production') {
     try {
