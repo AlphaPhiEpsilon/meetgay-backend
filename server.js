@@ -1,6 +1,6 @@
 // ============================================================
 // server.js - Cœur du chat MeetGay (restructuré)
-// ============================================================/ server.js - Cœur du chat MeetGay (restructuré)
+// ============================================================5. JWT & ADMIN MIDDLEWARE
 // STRUCTURE :
 // 1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT
 // 2. IMPORTS
