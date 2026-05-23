@@ -1,4 +1,4 @@
-// ============================================================1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT
+// ============================================================3. CONNEXION À POSTGRESQL
 // server.js - Cœur du chat MeetGay (restructuré)
 // ============================================================
 // STRUCTURE :
