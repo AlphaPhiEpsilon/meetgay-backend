@@ -5,5 +5,8 @@
             "command": "cd /root/meetgay && git add . && git commit -m \"Auto-save\" && git push origin HEAD:main --force",
             "runIn": "terminal"
         }
-    ]
+    ],
+
+        "git.enabled": false,
+        "git.autofetch": false
 }
