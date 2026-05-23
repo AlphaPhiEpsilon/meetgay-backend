@@ -1,6 +1,6 @@
 // ============================================================
 // server.js - Cœur du chat MeetGay (restructuré)
-// ============================================================// server.js - Cœur du chat MeetGay (restructuré)
+// ============================================================/ server.js - Cœur du chat MeetGay (restructuré)
 // STRUCTURE :
 // 1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT
 // 2. IMPORTS
