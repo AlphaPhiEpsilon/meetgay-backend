@@ -2711,6 +2711,37 @@ Vvveb.FileManager.loadPage(pages[firstPage]["name"]);
 Vvveb.Gui.toggleRightColumn(false);
 Vvveb.Breadcrumb.init();
 </script>
+<script>
+	// Gestion de l'importation de fichier
+	document.addEventListener('DOMContentLoaded', function () {
+		const importBtn = document.getElementById('importBtn');
+		const fileInput = document.getElementById('fileInput');
+
+		if (importBtn && fileInput) {
+			importBtn.addEventListener('click', function () {
+				fileInput.click();
+			});
+
+			fileInput.addEventListener('change', function (event) {
+				const file = event.target.files[0];
+				if (!file) return;
+
+				const reader = new FileReader();
+				reader.onload = function (e) {
+					const htmlContent = e.target.result;
+
+					if (typeof Vvveb !== 'undefined' && Vvveb.Builder) {
+						Vvveb.Builder.setHtml(htmlContent);
+						alert('Fichier chargé avec succès !');
+					} else {
+						alert('Erreur : éditeur non initialisé. Attendez un peu.');
+					}
+				};
+				reader.readAsText(file);
+			});
+		}
+	});
+</script>
 </body>
 
 </html>
