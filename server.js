@@ -1,6 +1,6 @@
 // ============================================================
 // server.js - Cœur du chat MeetGay (restructuré)
-// ============================================================
+// ============================================================. IMPORTS
 // STRUCTURE :
 // 1. CHARGEMENT DES VARIABLES D'ENVIRONNEMENT
 // 2. IMPORTS
@@ -352,6 +352,12 @@ startCleanup(pool, () => Object.values(users).map(u => u.pseudo), 60 * 1000);
 
 // ========== 10. DÉMARRAGE ==========
 const PORT = process.env.PORT || 3000;
+
+// Route pour l'éditeur VvvebJs
+app.get("/editor", (req, res) => {
+    res.sendFile("/root/meetgay/public/editor/editor.html");
+});
+
 server.listen(PORT, '0.0.0.0', () => {
     console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
 });
