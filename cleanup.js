@@ -1,4 +1,4 @@
-// cleanup.js - Nettoyage périodique des visiteurs libres
+// cleanup.js - Nettoyage périodique des visiteurs libres******
 
 const { Pool } = require('pg');
 
